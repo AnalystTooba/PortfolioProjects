@@ -83,3 +83,31 @@ print(correlation_results)
 output_path = '/content/sample_data/correlation_results.csv'
 correlation_results.to_csv(output_path, index=False)
 print(f"Correlation results saved to {output_path}")
+
+# Create the dataframe with the correlation data
+data = {
+    'Year': [1993, 1998, 2003, 2008, 2013, 2018, 2023],
+    'NDVI vs. LST Correlation': [-0.693208, -0.669235, -0.829980, -0.860369, -0.859963, -0.831691, -0.745947],
+    'NDBI vs. LST Correlation': [0.781815, 0.794218, 0.887275, 0.898917, 0.903256, 0.867285, 0.854505]
+}
+
+df = pd.DataFrame(data)
+
+# Create a heatmap-friendly format
+correlation_matrix = np.array([df['NDVI vs. LST Correlation'], df['NDBI vs. LST Correlation']])
+
+# Set the plot style
+sns.set(style="whitegrid")
+
+# Create the heatmap
+plt.figure(figsize=(10, 6))
+sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm", xticklabels=df['Year'], yticklabels=["NDVI vs. LST", "NDBI vs. LST"], cbar_kws={'label': 'Correlation'}, linewidths=0.5)
+
+# Add titles and labels
+plt.title('Correlation Between NDVI/NDBI and LST Over the Years', fontsize=16)
+plt.xlabel('Year', fontsize=12)
+plt.ylabel('Correlation Type', fontsize=12)
+
+# Display the plot
+plt.tight_layout()
+plt.show()
